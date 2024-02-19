@@ -46,6 +46,11 @@ class SalesController extends Controller
 
             fclose($in);
 
+            if (file_exists($inputFilePath)) {
+                unlink($inputFilePath);
+            }
+
+
             if(substr(PHP_OS, 0, 3) != 'WIN') {
                 $this->changeFolderPermissions(storage_path('app/Uploaded_Excel_Files'), 0777);
             }
