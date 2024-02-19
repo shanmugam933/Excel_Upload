@@ -22,7 +22,7 @@ use Maatwebsite\Excel\Concerns\WithCalculatedFormulas;
 
 HeadingRowFormatter::default('none');
 
-class SalesImport implements ToModel, WithMultipleSheets, SkipsUnknownSheets, WithHeadingRow, WithChunkReading, WithBatchInserts, WithCalculatedFormulas, ShouldQueue
+class SalesImport implements ToModel, WithMultipleSheets, SkipsUnknownSheets, WithChunkReading, WithBatchInserts, WithCalculatedFormulas, ShouldQueue
 {
 
     private $totalRows;
@@ -49,37 +49,27 @@ class SalesImport implements ToModel, WithMultipleSheets, SkipsUnknownSheets, Wi
 
     public function model(array $row)
     {
-
-
-
-
-
-            return new SaleRecord([
-                'region' => isset($row['region']) ? $row['region'] : null,
-                'item_type' => isset($row['item_type']) ? $row['item_type'] : null,
-                'order_date' => isset($row['order_date']) ? Carbon::createFromFormat('m/d/Y', '1/1/1900')
-                                ->addDays((int)$row['order_date'] - 1)
-                                ->toDateString() : null,
-                'order_id' => isset($row['order_id']) ? $row['order_id'] : null,
-                'units_sold' => isset($row['units_sold']) ? $row['units_sold'] : null,
-                'unit_price' => isset($row['unit_price']) ? $row['unit_price'] : null,
-                'total_cost' => isset($row['total_cost']) ? $row['total_cost'] : null,
-                'total_profit' => isset($row['total_profit']) ? $row['total_profit'] : null,
-            ]);
-
-
-
+        return new SaleRecord([
+            'region' => isset($row[0]) ? $row[0] : null,
+            'item_type' => isset($row[1]) ? $row[1] : null,
+            'order_date' => isset($row[2]) ? Carbon::createFromFormat('m/d/Y', '1/1/1900')
+                            ->addDays((int)$row[2] - 1)
+                            ->toDateString() : null,
+            'order_id' => isset($row[3]) ? $row[3] : null,
+            'units_sold' => isset($row[4]) ? $row[4] : null,
+            'unit_price' => isset($row[5]) ? $row[5] : null,
+            'total_cost' => isset($row[6]) ? $row[6] : null,
+            'total_profit' => isset($row[7]) ? $row[7] : null,
+        ]);
     }
 
     public function chunkSize(): int
     {
-        return 1000;
+        return 2500;
     }
 
     public function batchSize(): int
     {
-        return 1000;
+        return 2500;
     }
-
-
 }

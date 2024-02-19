@@ -26,7 +26,7 @@ class ImportSalesData implements ShouldQueue
         try {
             Excel::import(new SalesImport(), $this->path);
         } catch (Exception $e) {
-           
+
             \Log::error('Error importing sales data: ' . $e->getMessage());
             $this->fail($e);
         }
