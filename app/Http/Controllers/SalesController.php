@@ -59,9 +59,9 @@ class SalesController extends Controller
                 ImportSalesData::dispatch($file);
             }
 
-            return response()->json(["message" => "Importing In-progress"]);
+            return redirect()->back()->with(["success" => "Importing In-progress in Background"]);
         } else {
-            return response()->json(['error' => 'The file does not exist or is not readable'], 400);
+            return redirect()->back()->with(['error' => 'The file does not exist or is not readable']);
         }
     }
 

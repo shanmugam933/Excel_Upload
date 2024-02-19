@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SalesController;
+use App\Http\Controllers\DataController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,9 +14,7 @@ use App\Http\Controllers\SalesController;
 |
 */
 
-Route::any('/', function () {
-    return view('index');
-});
-
-
 Route::post('/SalesInvoiceImport', [SalesController::class, 'SalesInvoiceImport'])->name('SalesInvoiceImport');
+
+Route::get('/', [DataController::class, 'index']);
+Route::any('/sales/data', [DataController::class, 'fetchSalesData'])->name('sales.data');
